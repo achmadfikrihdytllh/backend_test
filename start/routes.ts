@@ -15,5 +15,5 @@ router.group(() => {
   router.post('/generate', [PdfReportsController, 'generate'])
   router.post('/upload', [PdfReportsController, 'upload'])
   router.delete('/:id', [PdfReportsController, 'destroy'])
-}).prefix('api/pdf')
+}).prefix('/api/pdf')
 

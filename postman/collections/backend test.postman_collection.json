@@ -45,7 +45,7 @@
           },
           "status": "OK",
           "code": 200,
-          "_postman_previewlanguage": null,
+          "_postman_previewlanguage": "Text",
           "header": [
             {
               "key": "x-request-id",
@@ -85,7 +85,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n  \"title\": \"Laporan Kunjungan Pasien 2026\",\r\n  \"institution_name\": \"RS Sehat Sentosa\",\r\n  \"address\": \"Jl. Kesehatan No. 123, Jakarta\",\r\n  \"phone\": \"(021) 123-4567\",\r\n  \"logo_url\": \"https://megamitensei.fandom.com/wiki/Gekkoukan_High_School?file=Gekkoukan_Emblem.png\",\r\n  \"content\": \"Berikut adalah laporan kunjungan pasien bulan Januari 2026 yang mencakup data statistik harian.\"\r\n}",
+          "raw": "{\r\n  \"title\": \"Laporan Kunjungan Pasien 2026 Februari\",\r\n  \"origin_name\": \"Testing dokumentasi 1\",\r\n  \"institution_name\": \"RS Sehat Sentosa\",\r\n  \"address\": \"Jl. Kesehatan No. 123, Jakarta\",\r\n  \"phone\": \"(021) 123-4567\",\r\n  \"logo_url\": \"https://static.wikia.nocookie.net/megamitensei/images/1/17/Gekkoukan_Emblem.png/revision/latest?cb=20150702014019\",\r\n  \"content\": \"Berikut adalah laporan kunjungan pasien bulan Januari 2026 yang mencakup data statistik harian.\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -134,7 +134,7 @@
           },
           "status": "Created",
           "code": 201,
-          "_postman_previewlanguage": null,
+          "_postman_previewlanguage": "Text",
           "header": [
             {
               "key": "x-request-id",
@@ -193,7 +193,7 @@
           },
           "status": "Unprocessable Entity",
           "code": 422,
-          "_postman_previewlanguage": null,
+          "_postman_previewlanguage": "Text",
           "header": [
             {
               "key": "x-request-id",
@@ -237,7 +237,9 @@
             {
               "key": "file",
               "type": "file",
-              "src": "/C:/Users/USER/Downloads/pkpadmin,+965-4570-1-CE.pdf"
+              "src": [
+                "/C:/Users/USER/Downloads/Tanda Terima Wisuda.pdf"
+              ]
             }
           ]
         },
@@ -268,7 +270,9 @@
                 {
                   "key": "file",
                   "type": "file",
-                  "src": "/C:/Users/USER/Documents/BERKAS/Cover+daftar isi.pdf"
+                  "src": [
+                    "/C:/Users/USER/Documents/BERKAS/Cover+daftar isi.pdf"
+                  ]
                 }
               ],
               "options": {
@@ -293,7 +297,7 @@
           },
           "status": "Created",
           "code": 201,
-          "_postman_previewlanguage": null,
+          "_postman_previewlanguage": "Text",
           "header": [
             {
               "key": "x-request-id",
@@ -335,7 +339,9 @@
                 {
                   "key": "file",
                   "type": "file",
-                  "src": "/C:/Users/USER/Downloads/pkpadmin,+965-4570-1-CE.pdf"
+                  "src": [
+                    "/C:/Users/USER/Downloads/pkpadmin,+965-4570-1-CE.pdf"
+                  ]
                 }
               ],
               "options": {
@@ -360,7 +366,7 @@
           },
           "status": "Payload Too Large",
           "code": 413,
-          "_postman_previewlanguage": null,
+          "_postman_previewlanguage": "Text",
           "header": [
             {
               "key": "x-request-id",
@@ -411,7 +417,7 @@
           "variable": [
             {
               "key": ":id",
-              "value": "99"
+              "value": "6"
             }
           ]
         }
@@ -443,7 +449,7 @@
           },
           "status": "OK",
           "code": 200,
-          "_postman_previewlanguage": null,
+          "_postman_previewlanguage": "Text",
           "header": [
             {
               "key": "x-request-id",
@@ -499,7 +505,7 @@
           },
           "status": "Not Found",
           "code": 404,
-          "_postman_previewlanguage": null,
+          "_postman_previewlanguage": "Text",
           "header": [
             {
               "key": "x-request-id",
