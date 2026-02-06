@@ -1,4 +1,6 @@
-PDF Management System API (AdonisJS v6)1. Deskripsi ProjectProject ini adalah sistem RESTful API untuk manajemen dokumen PDF yang dibangun menggunakan framework AdonisJS v6. API ini mendukung alur kerja pembuatan laporan otomatis (rendering HTML ke PDF), pengunggahan file fisik, serta manajemen status data menggunakan metode soft-delete.2. Tech StackFramework: AdonisJS v6 (TypeScript).Runtime: Node.js (v20.6.0+).Database: PostgreSQL.ORM: Lucid ORM.PDF Engine: Puppeteer.Validator: VineJS.3. Struktur Folder ProjectPlaintextbackend-test/
+PDF Management System API (AdonisJS v6)1. Deskripsi ProjectProject ini adalah sistem RESTful API untuk manajemen dokumen PDF yang dibangun menggunakan framework AdonisJS v6. API ini mendukung alur kerja pembuatan laporan otomatis (rendering HTML ke PDF), pengunggahan file fisik, serta manajemen status data menggunakan metode soft-delete.
+
+2. Tech StackFramework: AdonisJS v6 (TypeScript).Runtime: Node.js (v20.6.0+).Database: PostgreSQL.ORM: Lucid ORM.PDF Engine: Puppeteer.Validator: VineJS.3. Struktur Folder ProjectPlaintextbackend-test/
 ├── app/
 │   ├── controllers/      # Logika utama (PdfReportsController)
 │   ├── models/           # Definisi skema tabel (PdfFile)
@@ -11,7 +13,8 @@ PDF Management System API (AdonisJS v6)1. Deskripsi ProjectProject ini adalah si
 ├── uploads/pdf/          # Folder penyimpanan file fisik PDF
 └── .env                  # Konfigurasi environment (Rahasia)
 
-4. Cara Instalasi dan Menjalankan ProjectLangkah 1: Clone RepositoryBashgit clone <url-repository-kamu>
+3. Cara Instalasi dan Menjalankan Project
+Langkah 1: Clone RepositoryBashgit clone <url-repository-kamu>
 cd backend_test
 Langkah 2: Install DependenciesBashnpm install
 Langkah 3: Konfigurasi DatabaseBuka TablePlus atau tool database lainnya.Buat database baru bernama backend_test di PostgreSQL.Pastikan PostgreSQL berjalan di port 5432.Langkah 4: Konfigurasi EnvironmentBuat file .env dan sesuaikan dengan konfigurasi berikut:Cuplikan kodePORT=3333
@@ -26,7 +29,7 @@ DB_USER=postgres
 DB_PASSWORD=
 DB_DATABASE=backend_test
 
-Langkah 5: Jalankan Migrasi dan ServerBash# Membuat tabel database
+Langkah 4: Jalankan Migrasi dan ServerBash# Membuat tabel database
 node ace migration:run
 
 # Menjalankan server development
