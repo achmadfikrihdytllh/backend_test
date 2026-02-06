@@ -1,0 +1,535 @@
+{
+  "info": {
+    "_postman_id": "575019a1-3016-4b9c-a736-c1699531d025",
+    "name": "backend test",
+    "description": "### **PDF Management System - Technical Test**\n\nSistem ini adalah RESTful API yang dibangun menggunakan **AdonisJS v6** untuk mengelola dokumen PDF. Proyek ini mencakup fitur pembuatan laporan otomatis, pengunggahan file, serta manajemen status data di database **PostgreSQL**.\n\n**Fitur Utama:**\n\n- **Generate PDF**: Mengubah data JSON menjadi dokumen PDF profesional dengan Header (Logo & Alamat) dan Footer otomatis menggunakan Puppeteer.\n    \n- **Upload PDF**: Menerima file fisik dengan validasi ukuran maksimal 10MB.\n    \n- **Soft Delete**: Menghapus data secara logis (mengubah status) tanpa menghilangkan file fisik dari storage.\n    \n\n---\n\n## Deskripsi Setiap Method (Untuk Setiap Request)\n\n### **A. GET - List PDF Files**\n\n- **Tujuan**: Mengambil semua daftar file yang tersedia di database.\n    \n- **Logika**: Menggunakan filter `.whereNot('status', 'DELETED')` sehingga data yang sudah di-soft delete tidak akan muncul kembali di daftar ini.\n    \n- **Response**: Mengembalikan array objek dengan format data `snake_case` sesuai standar industri.\n    \n\n### **B. POST - Generate PDF Report**\n\n- **Tujuan**: Membuat PDF dinamis berdasarkan input user.\n    \n- **Request Body**: Membutuhkan `title`, `institution_name`, `address`, `phone`, `logo_url`, dan `content`.\n    \n- **Proses**:\n    \n    1. Validasi input menggunakan **VineJS**.\n        \n    2. Menghasilkan HTML template untuk Body, Header, dan Footer.\n        \n    3. **Puppeteer** merender HTML tersebut menjadi file PDF A4 yang disimpan di `/uploads/pdf/`.\n        \n    4. Menyimpan metadata file ke database dengan status `CREATED`.\n        \n\n### **C. POST - Upload PDF File**\n\n- **Tujuan**: Menyimpan file PDF eksternal ke dalam sistem.\n    \n- **Request Body**: Menggunakan tipe `multipart/form-data` dengan key `file`.\n    \n- **Validasi**: File harus berformat `.pdf` dan berukuran maksimal **10MB**.\n    \n- **Proses**: File dipindahkan ke folder uploads dengan nama unik berbasis `cuid()` dan tanggal untuk menghindari duplikasi.\n    \n\n### **D. DELETE - Soft Delete PDF**\n\n- **Tujuan**: Menandai file sebagai terhapus.\n    \n- **Request**: Mengirimkan `id` file melalui URL parameter.\n    \n- **Logika**:\n    \n    1. Mencari data berdasarkan ID.\n        \n    2. Jika ditemukan, status diubah menjadi `DELETED`.\n        \n    3. Kolom `deletedAt` diisi dengan timestamp saat ini.\n        \n    4. File fisik **tetap ada** di storage sebagai cadangan (sesuai prinsip soft delete).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "retrieve list pdf",
+      "id": "b83ab508-4238-4910-8dea-9eaf979d102a",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/pdf/list",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "pdf",
+            "list"
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "fba8bb7d-99b8-4840-989e-4c35f773c46a",
+          "name": "200",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/pdf/list",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "pdf",
+                "list"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "x-request-id",
+              "value": "uf2cm2a6mllew36pk0sajg8v"
+            },
+            {
+              "key": "content-length",
+              "value": "992"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 06 Feb 2026 03:59:41 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": true,\n    \"message\": \"List PDF retrieved successfully\",\n    \"data\": [\n        {\n            \"id\": 3,\n            \"filename\": \"upload_20260206_fxzzhhsg5wpp9e67yo6jw35m.pdf\",\n            \"original_name\": \"Cover+daftar isi.pdf\",\n            \"filepath\": \"/uploads/pdf/upload_20260206_fxzzhhsg5wpp9e67yo6jw35m.pdf\",\n            \"size\": \"497964\",\n            \"status\": \"UPLOADED\",\n            \"created_at\": \"2026-02-06T03:57:44.752+00:00\",\n            \"updated_at\": \"2026-02-06T03:57:44.752+00:00\",\n            \"deleted_at\": null\n        },\n        {\n            \"id\": 2,\n            \"filename\": \"report_20260206_elmk2l52wh2hkrj6g9pfhe7j.pdf\",\n            \"original_name\": null,\n            \"filepath\": \"/uploads/pdf/report_20260206_elmk2l52wh2hkrj6g9pfhe7j.pdf\",\n            \"size\": \"43393\",\n            \"status\": \"CREATED\",\n            \"created_at\": \"2026-02-06T03:51:33.008+00:00\",\n            \"updated_at\": \"2026-02-06T03:51:33.008+00:00\",\n            \"deleted_at\": null\n        },\n        {\n            \"id\": 1,\n            \"filename\": \"report_20260206_mjqorwyly3otgh66oq2zfff2.pdf\",\n            \"original_name\": null,\n            \"filepath\": \"/uploads/pdf/report_20260206_mjqorwyly3otgh66oq2zfff2.pdf\",\n            \"size\": \"42846\",\n            \"status\": \"CREATED\",\n            \"created_at\": \"2026-02-06T03:49:39.175+00:00\",\n            \"updated_at\": \"2026-02-06T03:49:39.177+00:00\",\n            \"deleted_at\": null\n        }\n    ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "Generate PDF",
+      "id": "ea7053c7-27f1-4452-87f1-a018a8e229fd",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"Laporan Kunjungan Pasien 2026\",\r\n  \"institution_name\": \"RS Sehat Sentosa\",\r\n  \"address\": \"Jl. Kesehatan No. 123, Jakarta\",\r\n  \"phone\": \"(021) 123-4567\",\r\n  \"logo_url\": \"https://megamitensei.fandom.com/wiki/Gekkoukan_High_School?file=Gekkoukan_Emblem.png\",\r\n  \"content\": \"Berikut adalah laporan kunjungan pasien bulan Januari 2026 yang mencakup data statistik harian.\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/pdf/generate",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "pdf",
+            "generate"
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "c0261bc0-182d-4df6-95de-7701d343699b",
+          "name": "200",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Laporan Kunjungan Pasien\",\r\n  \"institution_name\": \"RS Sehat Sentosa\",\r\n  \"address\": \"Jl. Kesehatan No. 123, Jakarta\",\r\n  \"phone\": \"(021) 123-4567\",\r\n  \"logo_url\": \"https://megamitensei.fandom.com/wiki/Gekkoukan_High_School?file=Gekkoukan_Emblem.png\",\r\n  \"content\": \"Berikut adalah laporan kunjungan pasien bulan Januari 2026 yang mencakup data statistik harian.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/pdf/generate",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "pdf",
+                "generate"
+              ]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "x-request-id",
+              "value": "jyhl8ddvi0x7a5lo5vr9r1x4"
+            },
+            {
+              "key": "content-length",
+              "value": "322"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 06 Feb 2026 03:49:39 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": true,\n    \"message\": \"PDF generated successfully\",\n    \"data\": {\n        \"filename\": \"report_20260206_mjqorwyly3otgh66oq2zfff2.pdf\",\n        \"filepath\": \"/uploads/pdf/report_20260206_mjqorwyly3otgh66oq2zfff2.pdf\",\n        \"size\": 42846,\n        \"status\": \"CREATED\",\n        \"createdAt\": \"2026-02-06T03:49:39.175+00:00\",\n        \"updatedAt\": \"2026-02-06T03:49:39.177+00:00\",\n        \"id\": \"1\"\n    }\n}"
+        },
+        {
+          "id": "062acd94-f6ad-4a3d-8fc4-339d06abc6fb",
+          "name": "422 error",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"institution_name\": \"RS Medika\",\r\n  \"address\": \"Jakarta\",\r\n  \"phone\": \"021-999\",\r\n  \"content\": \"Tes error tanpa title\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/pdf/generate",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "pdf",
+                "generate"
+              ]
+            }
+          },
+          "status": "Unprocessable Entity",
+          "code": 422,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "x-request-id",
+              "value": "gypfjwqsqbicw288y5swhjb5"
+            },
+            {
+              "key": "content-length",
+              "value": "92"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 06 Feb 2026 04:02:24 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"errors\": [\n        {\n            \"message\": \"The title field must be defined\",\n            \"rule\": \"required\",\n            \"field\": \"title\"\n        }\n    ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "Upload PDF",
+      "id": "67979d79-3303-4d73-9679-3aa1f580c33b",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": "/C:/Users/USER/Downloads/pkpadmin,+965-4570-1-CE.pdf"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:3333/api/pdf/upload",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3333",
+          "path": [
+            "api",
+            "pdf",
+            "upload"
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "62a69a8e-6caa-4513-9222-7ea6e1d9e126",
+          "name": "200",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "/C:/Users/USER/Documents/BERKAS/Cover+daftar isi.pdf"
+                }
+              ],
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3333/api/pdf/upload",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3333",
+              "path": [
+                "api",
+                "pdf",
+                "upload"
+              ]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "x-request-id",
+              "value": "dktm7m160gtwt3s2tjmm84qk"
+            },
+            {
+              "key": "content-length",
+              "value": "361"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 06 Feb 2026 03:57:44 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": true,\n    \"message\": \"PDF uploaded successfully\",\n    \"data\": {\n        \"filename\": \"upload_20260206_fxzzhhsg5wpp9e67yo6jw35m.pdf\",\n        \"originalName\": \"Cover+daftar isi.pdf\",\n        \"filepath\": \"/uploads/pdf/upload_20260206_fxzzhhsg5wpp9e67yo6jw35m.pdf\",\n        \"size\": 497964,\n        \"status\": \"UPLOADED\",\n        \"createdAt\": \"2026-02-06T03:57:44.752+00:00\",\n        \"updatedAt\": \"2026-02-06T03:57:44.752+00:00\",\n        \"id\": \"3\"\n    }\n}"
+        },
+        {
+          "id": "1126deae-17c5-42c6-a13c-41e99823798e",
+          "name": "413 error",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "/C:/Users/USER/Downloads/pkpadmin,+965-4570-1-CE.pdf"
+                }
+              ],
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3333/api/pdf/upload",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3333",
+              "path": [
+                "api",
+                "pdf",
+                "upload"
+              ]
+            }
+          },
+          "status": "Payload Too Large",
+          "code": 413,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "x-request-id",
+              "value": "ruya4xzpr25skdjvfq6n9hge"
+            },
+            {
+              "key": "content-length",
+              "value": "98"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 06 Feb 2026 04:06:55 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": false,\n    \"message\": \"File size exceeds maximum limit (10MB)\",\n    \"error_code\": \"FILE_TOO_LARGE\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Delete PDF",
+      "id": "bd1fb07f-2db8-4bad-83f2-41e564aba33d",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/pdf/::id",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "pdf",
+            "::id"
+          ],
+          "variable": [
+            {
+              "key": ":id",
+              "value": "99"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "bb7c852c-1856-410a-903a-7937ae15c86d",
+          "name": "200",
+          "originalRequest": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/pdf/::id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "pdf",
+                "::id"
+              ],
+              "variable": [
+                {
+                  "key": ":id",
+                  "value": "3"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "x-request-id",
+              "value": "zwcra8x19xkv3jq9hb5w8z3i"
+            },
+            {
+              "key": "content-length",
+              "value": "407"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 06 Feb 2026 04:00:30 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": true,\n    \"message\": \"PDF deleted successfully\",\n    \"data\": {\n        \"id\": 3,\n        \"filename\": \"upload_20260206_fxzzhhsg5wpp9e67yo6jw35m.pdf\",\n        \"original_name\": \"Cover+daftar isi.pdf\",\n        \"filepath\": \"/uploads/pdf/upload_20260206_fxzzhhsg5wpp9e67yo6jw35m.pdf\",\n        \"size\": \"497964\",\n        \"status\": \"DELETED\",\n        \"created_at\": \"2026-02-06T03:57:44.752+00:00\",\n        \"updated_at\": \"2026-02-06T04:00:30.577+00:00\",\n        \"deleted_at\": \"2026-02-06T04:00:30.563+00:00\"\n    }\n}"
+        },
+        {
+          "id": "ca9d29e2-63e8-4ff8-bcb6-4cf652143630",
+          "name": "404 error",
+          "originalRequest": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/pdf/::id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "pdf",
+                "::id"
+              ],
+              "variable": [
+                {
+                  "key": ":id",
+                  "value": "99"
+                }
+              ]
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "x-request-id",
+              "value": "ryic0j9zj7d83dfg2x8j1dn0"
+            },
+            {
+              "key": "content-length",
+              "value": "48"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 06 Feb 2026 04:04:47 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": false,\n    \"message\": \"PDF file not found\"\n}"
+        }
+      ]
+    }
+  ]
+}
