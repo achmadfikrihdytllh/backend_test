@@ -106,65 +106,6 @@
       },
       "response": [
         {
-          "id": "c0261bc0-182d-4df6-95de-7701d343699b",
-          "name": "200",
-          "originalRequest": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"title\": \"Laporan Kunjungan Pasien\",\r\n  \"institution_name\": \"RS Sehat Sentosa\",\r\n  \"address\": \"Jl. Kesehatan No. 123, Jakarta\",\r\n  \"phone\": \"(021) 123-4567\",\r\n  \"logo_url\": \"https://megamitensei.fandom.com/wiki/Gekkoukan_High_School?file=Gekkoukan_Emblem.png\",\r\n  \"content\": \"Berikut adalah laporan kunjungan pasien bulan Januari 2026 yang mencakup data statistik harian.\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{base_url}}/api/pdf/generate",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "pdf",
-                "generate"
-              ]
-            }
-          },
-          "status": "Created",
-          "code": 201,
-          "_postman_previewlanguage": "Text",
-          "header": [
-            {
-              "key": "x-request-id",
-              "value": "jyhl8ddvi0x7a5lo5vr9r1x4"
-            },
-            {
-              "key": "content-length",
-              "value": "322"
-            },
-            {
-              "key": "content-type",
-              "value": "application/json; charset=utf-8"
-            },
-            {
-              "key": "Date",
-              "value": "Fri, 06 Feb 2026 03:49:39 GMT"
-            },
-            {
-              "key": "Connection",
-              "value": "keep-alive"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=5"
-            }
-          ],
-          "cookie": [],
-          "body": "{\n    \"success\": true,\n    \"message\": \"PDF generated successfully\",\n    \"data\": {\n        \"filename\": \"report_20260206_mjqorwyly3otgh66oq2zfff2.pdf\",\n        \"filepath\": \"/uploads/pdf/report_20260206_mjqorwyly3otgh66oq2zfff2.pdf\",\n        \"size\": 42846,\n        \"status\": \"CREATED\",\n        \"createdAt\": \"2026-02-06T03:49:39.175+00:00\",\n        \"updatedAt\": \"2026-02-06T03:49:39.177+00:00\",\n        \"id\": \"1\"\n    }\n}"
-        },
-        {
           "id": "062acd94-f6ad-4a3d-8fc4-339d06abc6fb",
           "name": "422 error",
           "originalRequest": {
@@ -222,6 +163,66 @@
           ],
           "cookie": [],
           "body": "{\n    \"errors\": [\n        {\n            \"message\": \"The title field must be defined\",\n            \"rule\": \"required\",\n            \"field\": \"title\"\n        }\n    ]\n}"
+        },
+        {
+          "id": "3294df30-8643-4fdf-a34f-3d800503066c",
+          "name": "200",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Laporan Kunjungan Pasien 2026 Februari\",\r\n  \"origin_name\": \"Testing dokumentasi 1\",\r\n  \"institution_name\": \"RS Sehat Sentosa\",\r\n  \"address\": \"Jl. Kesehatan No. 123, Jakarta\",\r\n  \"phone\": \"(021) 123-4567\",\r\n  \"logo_url\": \"https://static.wikia.nocookie.net/megamitensei/images/1/17/Gekkoukan_Emblem.png/revision/latest?cb=20150702014019\",\r\n  \"content\": \"Berikut adalah laporan kunjungan pasien bulan Januari 2026 yang mencakup data statistik harian.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/pdf/generate",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "pdf",
+                "generate"
+              ]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "x-request-id",
+              "value": "zd87impc0hhw34e8j72mpfdi"
+            },
+            {
+              "key": "content-length",
+              "value": "323"
+            },
+            {
+              "key": "content-type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 06 Feb 2026 06:03:32 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "responseTime": "2026-02-06T06:04:31.494Z",
+          "body": "{\n    \"success\": true,\n    \"message\": \"PDF generated successfully\",\n    \"data\": {\n        \"filename\": \"report_20260206_xz5zqw2vvto98n77r1z3glzn.pdf\",\n        \"filepath\": \"/uploads/pdf/report_20260206_xz5zqw2vvto98n77r1z3glzn.pdf\",\n        \"size\": 138978,\n        \"status\": \"CREATED\",\n        \"created_at\": \"2026-02-06T06:03:32.467+00:00\",\n        \"updated_at\": \"2026-02-06T06:03:32.467+00:00\",\n        \"id\": 9\n    }\n}"
         }
       ]
     },
