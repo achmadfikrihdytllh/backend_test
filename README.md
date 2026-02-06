@@ -19,14 +19,23 @@ Project ini adalah sistem manajemen dokumen PDF berbasis RESTful API yang dibang
 ### Langkah 2: Konfigurasi Environment
 Buat file `.env` di root folder dan sesuaikan konfigurasinya:
 ```env
+TZ=UTC
 PORT=3333
 HOST=localhost
-NODE_ENV=development
+LOG_LEVEL=info
 APP_KEY=X9OuI9F2lqz8R81eEESzlxLvz6b5ctrk
+NODE_ENV=development
 
+# Bagian Database (PostgreSQL)
 DB_CONNECTION=pg
 DB_HOST=127.0.0.1
 DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=
+DB_DATABASE=backend_test
+
+# Bagian Drive/Uploads
+DRIVE_DISK=local
 
 # Install dependencies
 npm install
@@ -55,19 +64,4 @@ POST,/generate,Generate laporan PDF dari template HTML.
 POST,/upload,Upload file PDF fisik (Max 10MB).
 DELETE,/:id,Mengubah status data menjadi DELETED (Soft Delete).
 
-erDiagram
-    PDF_FILES {
-        bigint id PK
-        varchar filename
-        varchar original_name
-        varchar filepath
-        bigint size
-        enum status
-        timestamp created_at
-        timestamp updated_at
-        timestamp deleted_at
-    }
 https://hrd-pis.postman.co/workspace/fikuriolnyv's~b79261eb-c260-451e-8297-dd426e6fe6c9/collection/50030575-575019a1-3016-4b9c-a736-c1699531d025?action=share&creator=50030575&active-environment=50030575-c41a5cd4-8e24-4028-a738-41adf2c5bfc9
-DB_USER=postgres
-DB_PASSWORD=
-DB_DATABASE=backend_test
